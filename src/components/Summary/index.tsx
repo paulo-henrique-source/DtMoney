@@ -15,10 +15,9 @@ export const Summary = () => {
         acc.deposits += transaction.value
         acc.total += transaction.value
       } else if (transaction.type === 'withdraw') {
-        acc.withdraws += transaction.value
         acc.withdraws -= transaction.value
+        acc.total = acc.deposits + acc.withdraws
       }
-
       return acc
     },
     {
@@ -51,11 +50,7 @@ export const Summary = () => {
             <p>Saídas</p>
             <img src={outcomeImg} alt="Saídas"></img>
           </header>
-          <strong>
-            {summary.withdraws > 0
-              ? `- ${currencyNumberFormat(summary.withdraws)}}`
-              : currencyNumberFormat(summary.withdraws)}
-          </strong>
+          <strong>{currencyNumberFormat(summary.withdraws)}</strong>
         </div>
 
         <div className="highlight-background">
