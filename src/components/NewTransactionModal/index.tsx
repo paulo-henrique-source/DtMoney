@@ -67,7 +67,7 @@ export const NewTransactionModal = ({
           />
           <input
             type="number"
-            step="0.1"
+            step="0.01"
             placeholder="Valor"
             onChange={(event) => setValue(Number(event.target.value))}
           />
