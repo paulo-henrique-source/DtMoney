@@ -19,7 +19,7 @@ export const NewTransactionModal = ({
 }: INewTransactionModalProps) => {
   const { createTransaction } = useTransactions()
   const [title, setTitle] = useState('')
-  const [value, setValue] = useState(0)
+  const [value, setValue] = useState<number>(0)
   const [category, setCategory] = useState('')
   const [type, setType] = useState('deposit')
 
@@ -67,8 +67,8 @@ export const NewTransactionModal = ({
           />
           <input
             type="number"
+            step="0.1"
             placeholder="Valor"
-            value={value}
             onChange={(event) => setValue(Number(event.target.value))}
           />
           <TransactionTypeContainer>

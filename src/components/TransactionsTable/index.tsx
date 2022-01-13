@@ -1,6 +1,12 @@
 import { useTransactions } from '../../hooks/useTransactions'
 
-import { Container } from './styles'
+import { Container, ActionsContainer } from './styles'
+
+import { api } from '../../services/api'
+
+import { FiTrash2 } from 'react-icons/fi'
+import { BiPencil } from 'react-icons/bi'
+import { useEffect, useState } from 'react'
 
 interface ITransactionProps {
   id: number
@@ -13,10 +19,30 @@ interface ITransactionProps {
 
 export const TransactionsTable = () => {
   const { transactions } = useTransactions()
+  const [newTransactions, setNewTransactions] = useState(transactions)
+
+  const handleDelete = async (id: number) => {
+    var answer = window.confirm('Deseja realmente deletar essa transação ?')
+    if (answer) {
+      await api.delete(`/transactions/${id}`).then((response) => {
+        const data: any = transactions.filter(
+          (transaction) => transaction.id !== response.data.id
+        )
+        setNewTransactions(data)
+      })
+    } else {
+      return
+    }
+  }
+
+  useEffect(() => {
+    setNewTransactions(transactions)
+  }, [transactions])
+
   return (
     <>
       <Container>
-        {transactions.length > 0 ? (
+        {newTransactions.length > 0 ? (
           <table>
             <thead>
               <tr>
@@ -24,11 +50,12 @@ export const TransactionsTable = () => {
                 <th>Valor</th>
                 <th>Categoria</th>
                 <th>Data</th>
+                <th>Ações</th>
               </tr>
             </thead>
 
             <tbody>
-              {transactions.map((transaction: ITransactionProps) => {
+              {newTransactions.map((transaction: ITransactionProps) => {
                 return (
                   <tr key={transaction.id}>
                     <td>{transaction.title}</td>
@@ -48,6 +75,15 @@ export const TransactionsTable = () => {
                       {new Intl.DateTimeFormat('pt-br').format(
                         new Date(transaction.date * 1000)
                       )}
+                    </td>
+                    <td>
+                      <ActionsContainer>
+                        <FiTrash2
+                          color="red"
+                          fontSize="1.5rem"
+                          onClick={() => handleDelete(transaction.id)}
+                        />
+                      </ActionsContainer>
                     </td>
                   </tr>
                 )

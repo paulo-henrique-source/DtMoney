@@ -38,6 +38,14 @@ export const Container = styled.main`
     align-items: center;
     color: var(--title);
     font-size: 1.5rem;
-    margin-bottom: 2rem;
   }
+`
+
+export const ActionsContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 0rem;
+  gap: 20px;
+  cursor: pointer;
 `
