@@ -5,7 +5,6 @@ import { Container, ActionsContainer } from './styles'
 import { api } from '../../services/api'
 
 import { FiTrash2 } from 'react-icons/fi'
-import { BiPencil } from 'react-icons/bi'
 import { useEffect, useState } from 'react'
 
 interface ITransactionProps {
